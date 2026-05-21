@@ -8,10 +8,10 @@ import { useFamilia } from "../hooks/useFamilia";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [search, setSearch] = useState("");
-
   const [searchDebounced, setSearchDebounced] = useState("");
+  const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+  const isAdmin = usuario?.perfil === 'admin';
 
   // debounce
   useEffect(() => {
@@ -76,6 +76,7 @@ const Navbar = () => {
           <div className="max-w-7xl mx-auto px-4 w-full">
             
             <div className="flex justify-between h-16 items-center">
+
               {/* MENU DESKTOP */}
               <div className="hidden md:flex space-x-8">
                 <Link to="/visitas" className="hover:text-blue-400 transition">
@@ -86,9 +87,7 @@ const Navbar = () => {
                   Famílias
                 </Link>
 
-                <Link to="/consultar" className="hover:text-blue-400 transition">
-                  Consultar
-                </Link>
+
 
                 <Link to="/pessoas" className="hover:text-blue-400 transition">
                   Pessoas
@@ -97,21 +96,28 @@ const Navbar = () => {
                 <Link to="/vacinas" className="hover:text-blue-400 transition">
                   Vacina
                 </Link>
-                <Link to="/atendimentos" className="hover:text-blue-400 transition">
-                  Agendas
-                </Link>
-
-
-                <Link 
-                  to="/usuarios"
-                  className="hover:text-blue-400 transition"
-                 >
-                 Usuários
-                </Link>
 
                 <Link to="/zonas" className="hover:text-blue-400 transition">
                   Regiões
                 </Link>
+                {isAdmin && (
+                  <>
+                  <Link to="/atendimentos" className="hover:text-blue-400 transition">
+                    Agendas
+                  </Link>
+
+                  <Link to="/consultar" className="hover:text-blue-400 transition">
+                    Consultar
+                  </Link>
+
+                  <Link 
+                    to="/usuarios"
+                    className="hover:text-blue-400 transition"
+                  >
+                  Usuários
+                  </Link>
+                  </>
+                )}
 
                 <div ref={searchRef} className="relative w-72">
                   <input
@@ -121,6 +127,7 @@ const Navbar = () => {
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full bg-gray-200 p-2 pl-8 rounded-lg text-black"
                   />
+
 
                   <span className="absolute left-2 top-2 text-gray-500">
                     🔍
@@ -233,8 +240,6 @@ const Navbar = () => {
             </div>
 
             {/* MENU MOBILE */}
-
-
             {menuOpen && (
               <div
                 className="fixed inset-0 bg-black/40 z-[1500] md:hidden"
@@ -254,9 +259,7 @@ const Navbar = () => {
                       Famílias
                     </Link>
 
-                    <Link to="/consultar" onClick={() => setMenuOpen(false)}>
-                      Consultar
-                    </Link>
+
 
                     <Link to="/pessoas" onClick={() => setMenuOpen(false)}>
                       Pessoas
@@ -266,20 +269,25 @@ const Navbar = () => {
                       Vacina
                     </Link>
 
-                    <Link to="/atendimentos" onClick={() => setMenuOpen(false)}>
-                      Agendas
-                    </Link>
-
-                    
-                  
-
-                    <Link to="/usuarios" onClick={() => setMenuOpen(false)}>
-                      Usuários
-                    </Link>
-
                     <Link to="/zonas" onClick={() => setMenuOpen(false)}>
                       Regiões
                     </Link>
+                    {isAdmin && (
+                      <>
+                      <Link to="/consultar" onClick={() => setMenuOpen(false)}>
+                        Consultar
+                      </Link>
+
+                      <Link to="/atendimentos" onClick={() => setMenuOpen(false)}>
+                        Agendas
+                      </Link>                    
+
+                      <Link to="/usuarios" onClick={() => setMenuOpen(false)}>
+                        Usuários
+                      </Link>                     
+                      </>
+                    )}
+
 
                     <Link to="/perfil" onClick={() => setMenuOpen(false)}>
                       Perfil
