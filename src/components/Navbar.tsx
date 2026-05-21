@@ -76,7 +76,7 @@ const Navbar = () => {
           <div className="max-w-7xl mx-auto px-4 w-full">
             
             <div className="flex justify-between h-16 items-center">
-
+              {/* MENU DESKTOP */}
               <div className="hidden md:flex space-x-8">
                 <Link to="/visitas" className="hover:text-blue-400 transition">
                   Visitas
@@ -100,8 +100,6 @@ const Navbar = () => {
                 <Link to="/atendimentos" className="hover:text-blue-400 transition">
                   Agendas
                 </Link>
-
-                
 
 
                 <Link 
@@ -188,7 +186,7 @@ const Navbar = () => {
                 ☰
               </button>
                     
-
+              {/* BARRA PESQUISA MOBILE */}
               <div className="w-full flex h-screen items-center justify-center md:hidden mt-4">
                 <input
                   type="text"
@@ -231,13 +229,6 @@ const Navbar = () => {
                 )}
 
               </div>
-
-              <Link 
-                to="/perfil"
-                className="hover:text-blue-400 transition"
-              >
-                Perfil
-              </Link>
 
             </div>
 
@@ -290,6 +281,9 @@ const Navbar = () => {
                       Regiões
                     </Link>
 
+                    <Link to="/perfil" onClick={() => setMenuOpen(false)}>
+                      Perfil
+                    </Link>
 
                     <Link
                       to="/login"
