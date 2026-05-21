@@ -16,6 +16,8 @@ const Navbar = () => {
     usuario?.perfil !== 'ACS'
     && !!usuario?.perfil;
 
+  console.log("IS ADMIN?", isAdmin);
+
   // debounce
   useEffect(() => {
     const delay = setTimeout(() => {
