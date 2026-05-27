@@ -4,6 +4,15 @@ export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 ////console.log("API URL:", import.meta.env.VITE_API_URL);
+
+const response = await fetch(
+  'https://backend-app-acs.onrender.com/test'
+);
+
+const data = await response.json();
+
+console.log(data);
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 

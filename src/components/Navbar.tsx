@@ -11,12 +11,12 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const [searchDebounced, setSearchDebounced] = useState("");
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-  console.log("USUÁRIO NO NAVBAR:", usuario);
+  //console.log("USUÁRIO NO NAVBAR:", usuario);
   const isAdmin =
     usuario?.perfil !== 'ACS'
     && !!usuario?.perfil;
 
-  console.log("IS ADMIN?", isAdmin);
+  //console.log("IS ADMIN?", isAdmin);
 
   // debounce
   useEffect(() => {
