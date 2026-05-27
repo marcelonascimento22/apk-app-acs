@@ -5,9 +5,9 @@ const config: CapacitorConfig = {
   appName: 'ACS App',
   webDir: 'dist',
   server: {
-    androidScheme: 'http',
+    androidScheme: 'https',
     cleartext: true,
-    allowNavigation: ['192.168.1.15'] // Adicione o IP do seu backend aqui
+    allowNavigation: ['backend-app-acs.onrender.com'] // Adicione o IP do seu backend aqui
   }
 };
 
