@@ -25,6 +25,7 @@
     "bcrypt": "^6.0.0",
     "date-fns": "^4.1.0",
     "leaflet": "^1.9.4",
+    "lucide-react": "^1.17.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "postcss": "^8.5.8",

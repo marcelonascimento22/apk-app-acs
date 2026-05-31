@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../utils/Loading";
 
 type Usuario = {
   id: number;
@@ -85,7 +86,7 @@ const Usuarios = () => {
       {/* ================= MOBILE (CARDS) ================= */}
       <div className="flex flex-col gap-3 md:hidden">
         {loading ? (
-          <p className="text-center">Carregando...</p>
+          <Loading />
         ) : usuariosFiltrados.length === 0 ? (
           <p className="text-center">Nenhum usuário encontrado</p>
         ) : (
@@ -158,11 +159,7 @@ const Usuarios = () => {
 
           <tbody>
             {loading ? (
-              <tr>
-                <td colSpan={6} className="text-center p-4">
-                  Carregando...
-                </td>
-              </tr>
+              <Loading />
             ) : usuariosFiltrados.length === 0 ? (
               <tr>
                 <td colSpan={6} className="text-center p-4">

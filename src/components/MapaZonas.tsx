@@ -9,6 +9,7 @@ import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import api from "../services/api";
 import DialogEditarZona from "./DialogEditarZona";
 import { ZonaLayer } from "./ZonaLayer";
+import { Loading } from "../utils/Loading";
 
 
 
@@ -214,6 +215,7 @@ const MapaZonas = () => {
 
   // 🔹 Salvar geometria
   const salvarAlteracoesGeometria = async () => {
+
     for (const zona of zonasEditadas) {
       await api.put(`/zonas/${zona.id}/geometria`, {
         geometria: zona.geometria,
@@ -233,18 +235,27 @@ const MapaZonas = () => {
           throw new Error("Geometria não definida para nova zona");
         }
 
-        const res = await api.post("/zonas", data);
+        try{
+          console.log("Criando zona com dados:", {
+            ...data,
+            geometria: geometriaNovaZona,
+          });
 
-        await api.put(`/zonas/${res.data.id}/geometria`, {
-          geometria: geometriaNovaZona,
-        });
+          const res = await api.post("/zonas", {
+            nome: data.nome,
+            descricao: data.descricao,
+            geometria: geometriaNovaZona,
+          });
 
-        // criar vínculo
-        await api.post("/usuarios-zonas", {
-          usuarioId: data.acsId
-          ,
-          zonaId: res.data.id,
-        });
+          // criar vínculo
+          await api.post("/usuarios-zonas", {
+            usuarioId: data.acsId
+            ,
+            zonaId: res.data.id,
+          });
+        } catch (error: any) {
+          console.error(error.response?.data || error);
+        }
 
       } else {
         const editada = zonasEditadas.find(
@@ -288,7 +299,7 @@ const MapaZonas = () => {
     }
   };
 
-  if (isLoading) return <div>Carregando...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Erro ao carregar</div>;
 
   return (
