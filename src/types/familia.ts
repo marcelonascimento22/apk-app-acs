@@ -13,4 +13,6 @@ export interface Familia {
   longitude?: number;
 
   pessoas?: Pessoa[];
+
+  search: any; // Campo para armazenar o texto de busca
 }

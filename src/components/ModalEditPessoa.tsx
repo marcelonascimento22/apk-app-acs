@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import api from '../services/api';
+import { pessoaRepository } from '../database/repositories/pessoaRepository';
+import { familiaRepository } from '../database/repositories/familiaRepository';
 import type { Pessoa } from '../types/pessoa';
 import type { Familia } from '../types/familia';
 import ModalEditFamilia from './ModalEditFamilia';
@@ -68,7 +69,7 @@ useEffect(() => {
 
     setIsLoading(true);
     try {
-      const { data } = await api.get(`/familia?search=${busca}`);
+      const data = await familiaRepository.search(busca);
       setFamilias(data);
     } catch (err) {
       console.error("Erro ao buscar famílias", err);
@@ -116,10 +117,17 @@ useEffect(() => {
         return;
       }
 
-      const { data } = await api.put(`/pessoa/${form.id}`, cleanPayload);
+      const pessoaAtualizada =
+      await pessoaRepository.update(
+        form.id,
+        {
+          ...cleanPayload,
+          familiaId: form.familia?.id,
+        }
+      );
 
-      onSave(data);
-      onClose();
+    onSave(pessoaAtualizada);
+    onClose();
     } catch (err) {
       console.error(err);
       alert('Erro ao atualizar.');

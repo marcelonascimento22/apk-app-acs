@@ -2,12 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { StatusBar } from '@capacitor/status-bar';
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthContext";
 
 // cria o client
 const queryClient = new QueryClient();
+
+
+StatusBar.setOverlaysWebView({
+  overlay: true,
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

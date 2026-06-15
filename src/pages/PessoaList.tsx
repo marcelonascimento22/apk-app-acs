@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
 import type { Pessoa } from '../types/pessoa';
 import calculateAge from '../utils/calculateAge';
 import formatCPF from '../utils/formatCPF';
@@ -10,15 +9,13 @@ import formatFone from '../utils/formatFone';
 import formatSUS from '../utils/formatSUS';
 import ModalEditPessoa from '../components/ModalEditPessoa';
 import { Loading } from '../utils/Loading';
+import { usePessoas } from '../hooks/usePessoa';
 
 
 
 const PessoaList = () => {
   const queryClient = useQueryClient();
-  const { data: pessoas, isLoading, error } = useQuery({
-    queryKey: ['pessoas'],
-    queryFn: () => api.get<Pessoa[]>('/pessoa').then(res => res.data),
-  });
+  const { data: pessoas, isLoading, error } = usePessoas();
 
   const [selectedPessoa, setSelectedPessoa] = useState<Pessoa | null>(null);
   const navigate = useNavigate();
@@ -60,7 +57,7 @@ const PessoaList = () => {
           </thead>
 
           <tbody>
-            {pessoas?.map((p) => (
+            {pessoas?.map((p: any) => (
               <tr key={p.id} className="hover:bg-gray-100">
                 <td className="border px-4 py-2">{p.nome}</td>
                 <td className="border px-4 py-2">
@@ -93,7 +90,7 @@ const PessoaList = () => {
 
       {/* MOBILE */}
       <div className="md:hidden flex flex-col gap-4">
-        {pessoas?.map((p) => (
+        {pessoas?.map((p: any) => (
           <div key={p.id} className="border rounded-lg p-4 shadow">
 
             <p><strong>Nome:</strong> {p.nome}</p>

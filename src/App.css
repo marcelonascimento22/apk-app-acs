@@ -16,6 +16,9 @@
     outline-offset: 2px;
   }
 }
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 24px);
+}
 
 .hero {
   position: relative;

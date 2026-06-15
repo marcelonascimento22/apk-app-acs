@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https',
     cleartext: true,
-    allowNavigation: ['backend-app-acs.onrender.com'] // Adicione o IP do seu backend aqui
+    allowNavigation: ['backend-app-acs.onrender.com'] // Adicione o seu backend aqui
   }
 };
 

@@ -45,6 +45,27 @@ async function testarApi() {
   }
 }
 
+export async function firstSync(db:any){
+
+  const { data } =
+    await api.get("/sync/full");
+
+  for(const pessoa of data.pessoas){
+
+    await db.run(
+      `INSERT OR REPLACE INTO pessoa
+      (id,nome,cpf,sus)
+      VALUES(?,?,?,?)`,
+      [
+        pessoa.id,
+        pessoa.nome,
+        pessoa.cpf,
+        pessoa.sus
+      ]
+    );
+  }
+}
+
 testarApi();
 
 export default api;

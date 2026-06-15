@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import api from '../services/api';
+import { pessoaComorbidadeRepository } from '../database/repositories/PessoaComorbidadeRepository';
 
 interface Props {
   item: any;
@@ -21,14 +21,15 @@ export default function ModalEditarComorbidade({
       const dataAtual = new Date().toLocaleDateString('pt-BR');
 
       const observacaoFinal = `
-${item.observacao || ''}
-[${dataAtual}] ${novaObservacao}
-      `.trim();
+        ${item.observacao || ''}
+        [${dataAtual}] ${novaObservacao}
+        `.trim();
 
-      return api.patch(`/pessoa-comorbidade/${item.id}`, {
+      return pessoaComorbidadeRepository.atualizarStatus(
+        item.id,
         status,
-        observacao: observacaoFinal,
-      });
+        observacaoFinal
+      );
     },
     onSuccess,
   });

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Familia } from "../types/familia";
 import type { Pessoa } from "../types/pessoa";
 import { useFamilia } from "../hooks/useFamilia";
+import { Button } from "react-day-picker";
 
 
 
@@ -76,9 +77,9 @@ const Navbar = () => {
 
   return (
 
-        <nav className="w-full flex items-center bg-green-800 text-white shadow-lg">
+        <nav className="safe-top w-full flex items-center bg-green-800 text-white shadow-lg">
           
-          <div className="max-w-7xl mx-auto px-4 w-full">
+          <div className="max-w-7xl mx-auto px-4 w-full"> 
             
             <div className="flex justify-between h-16 items-center">
 
@@ -255,7 +256,7 @@ const Navbar = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 <div
-                  className="absolute top-0 left-0 w-64 h-full bg-green-800 text-white p-4 shadow-lg"
+                  className="absolute left-0 top-0 w-64 h-full bg-green-800 text-white p-4 shadow-lg pt-14"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col space-y-4 mt-6">
@@ -285,6 +286,13 @@ const Navbar = () => {
                     <Link to="/zonas" onClick={() => setMenuOpen(false)}>
                       Regiões
                     </Link>
+
+                    <Button
+                      onClick={() => {SyncService.sincronizar(); setMenuOpen(false)}}
+                    >
+                      Sincronizar Agora
+                    </Button>
+
                     {isAdmin && (
                       <>
                       <Link to="/consultar" onClick={() => setMenuOpen(false)}>

@@ -23,10 +23,27 @@ import Usuarios from "./pages/Usuarios";
 import Perfil from "./pages/Perfil";
 import EditarUsuarios from "./pages/EditarUsuarios";
 import Comorbidades from "./pages/Comorbidades";
-
+import { useEffect } from "react";
+import { DatabaseService } from "./database/database.service";
+import { SyncService } from "./services/sync.service";
 
 function App() {
   const { token } = useAuth();
+
+useEffect(async () => {
+  async function initialize() {
+    await DatabaseService.init();
+  }
+
+  const precisa = await SyncService.precisaSincronizar();
+
+  if (precisa) {
+    await SyncService.sincronizar();
+  }
+
+  initialize();
+}, []);
+
 
   const ProtectedLayout = () => (
     <PrivateRoute>

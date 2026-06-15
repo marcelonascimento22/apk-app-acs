@@ -12,6 +12,7 @@ import type { Comorbidade } from "../../types/comorbidade";
 import type { PessoaComorbidade } from "../../types/pessoaComorbidade";
 import formatDate from "../../utils/formatDate";
 import ModalEditarComorbidade from "../../components/ModalEditarComorbidade";
+import { pessoaComorbidadeRepository } from "../../database/repositories/PessoaComorbidadeRepository";
 
 
 
@@ -43,34 +44,36 @@ const InfoComrbidade = () => {
     );
 
       //Vincular
-  const vincularMutation = useMutation({
-    mutationFn: async () => {
-      return api.post('/pessoa-comorbidade/vincular', {
-        pessoaId: Number(id),
-        comorbidadeId: Number(form.comorbidadeId),
-        dataDiagnostico: form.dataDiagnostico,
-        observacao: form.observacao,
-        status: form.status,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pessoa-comorbidades', id] });
+    const vincularMutation = useMutation({
+      mutationFn: async () => {
+        return pessoaComorbidadeRepository.vincular({
+          pessoaId: Number(id),
+          comorbidadeId: Number(form.comorbidadeId),
+          dataDiagnostico: form.dataDiagnostico,
+          observacao: form.observacao,
+          status: form.status,
+        });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['pessoa-comorbidades', id] });
 
-      setForm({
-        comorbidadeId: '',
-        dataDiagnostico: '',
-        observacao: '',
-        status: 'Inicio de Tratamento',
-      });
+        setForm({
+          comorbidadeId: '',
+          dataDiagnostico: '',
+          observacao: '',
+          status: 'Inicio de Tratamento',
+        });
 
-      setMostrarForm(false); //fecha automaticamente
-    },
-  });
+        setMostrarForm(false); //fecha automaticamente
+      },
+    });
 
     // 🔹 Remover
     const removerMutation = useMutation({
         mutationFn: async (relacaoId: number) => {
-            return api.delete(`/pessoa-comorbidade/${relacaoId}`);
+          return pessoaComorbidadeRepository.remover(
+            relacaoId
+          );
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['pessoa-comorbidades', id] });
